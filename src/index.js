@@ -36,28 +36,39 @@ import './css/styles.css';
 //   document.querySelector("#rectangle-area-form").addEventListener("submit", handleRectangleForm);
 // });
 
-let mouse = { health: 25, attackStat: 5, defenseStat: 5 };
-let shrew = { health: 20, attackStat: 7, defenseStat: 3 };
-let mole = { health: 30, attackStat: 3, defenseStat: 7 };
+// let mouse = { health: 25, attackStat: 5, defenseStat: 5 };
+// let shrew = { health: 20, attackStat: 7, defenseStat: 3 };
+// let mole = { health: 30, attackStat: 3, defenseStat: 7 };
 
-const changeState = (prop) => {
-  return (value) => {
-    return (state) => ({
-      ...state,
-      [prop] : (state[prop] || 0) + value
-    });
-  };
-};
+// const changeState = (prop) => {
+//   return (value) => {
+//     return (state) => ({
+//       ...state,
+//       [prop] : (state[prop] || 0) + value
+//     });
+//   };
+// };
 
-const eat = changeState("health");
-const beDamaged = changeState("health");
-const newWeapon = changeState("attackStat");
-const newArmor = changeState("defenseStat");
+// const storeState = () => {
+//   let currentState = {};
+//   return (stateChangeFunction = state => state) => {
+//     const newState = stateChangeFunction(currentState);
+//     currentState = {...newState};
+//     return newState;
+//   };
+// };
 
-const okCheese = changeState("health")(3);
-const goodCheese = changeState("health")(5);
-const bestCheese = changeState("health")(10);
+// const stateControl = storeState();
 
-const basicDamage = changeState("health")(-6);
-const mediumDamage = changeState("health")(-9);
-const heavyDamage = changeState("health")(-12);
+// const eat = changeState("health");
+// const beDamaged = changeState("health");
+// const newWeapon = changeState("attackStat");
+// const newArmor = changeState("defenseStat");
+
+// const okCheese = changeState("health")(3);
+// const goodCheese = changeState("health")(5);
+// const bestCheese = changeState("health")(10);
+
+// const basicDamage = changeState("health")(-6);
+// const mediumDamage = changeState("health")(-9);
+// const heavyDamage = changeState("health")(-12);
