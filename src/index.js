@@ -1,64 +1,52 @@
 import 'bootstrap';
-import ' bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
 
-// import Triangle from './js/triangle.js';
-// import Rectangle from './js/rectangle.js';
+const storeState = () => {
+  let currentState = {};
+  return (stateChangeFunction = state => state) => {
+    const newState = stateChangeFunction(currentState);
+    currentState = {...newState};
+    return newState;
+  };
+};
+
+const stateControl = storeState();
+
+// const initialState = creatureState;
+
+const changeState = (prop) => {
+  return (value) => {
+    return (state) => ({
+      ...state,
+      [prop] : (state[prop] || 0) + value
+    });
+  };
+};
 
 
-// function handleTriangleForm() {
-//   event.preventDefault();
-//   document.querySelector('#response').innerText = null;
-//   const length2 = parseInt(document.querySelector('#length2').value);
-//   const length1 = parseInt(document.querySelector('#length1').value);
-//   const length3 = parseInt(document.querySelector('#length3').value);
-//   const triangle = new Triangle(length1, length2, length3);
-//   const response = triangle.checkType();
-//   const pTag = document.createElement("p");
-//   pTag.append(response);
-//   document.querySelector('#response').append(pTag);
-// }
-
-// function handleRectangleForm() {
-//   event.preventDefault();
-//   document.querySelector('#response2').innerText = null;
-//   const length1 = parseInt(document.querySelector('#rect-length1').value);
-//   const length2 = parseInt(document.querySelector('#rect-length2').value);
-//   const rectangle = new Rectangle(length1, length2);
-//   const response = rectangle.getArea();
-//   const pTag = document.createElement("p");
-//   pTag.append(`The area of the rectangle is ${response}.`);
-//   document.querySelector('#response2').append(pTag);
-// }
-
-// window.addEventListener("load", function() {
-//   document.querySelector("#triangle-checker-form").addEventListener("submit", handleTriangleForm);
-//   document.querySelector("#rectangle-area-form").addEventListener("submit", handleRectangleForm);
-// });
 
 // let mouse = { health: 25, attackStat: 5, defenseStat: 5 };
 // let shrew = { health: 20, attackStat: 7, defenseStat: 3 };
 // let mole = { health: 30, attackStat: 3, defenseStat: 7 };
 
-// const changeState = (prop) => {
-//   return (value) => {
-//     return (state) => ({
-//       ...state,
-//       [prop] : (state[prop] || 0) + value
-//     });
+
+
+// const creatureState = (name) => {
+//   let creature = {
+//     name
 //   };
+//   if (name === "mouse"){
+//     return {...creature, health: 25, attackStat: 5, defenseStat: 5 };
+//   } else if (name === "shrew") {
+//     return {...creature, health: 20, attackStat: 7, defenseStat: 3 };
+//   } else if (name === "mole") {
+//     return {...creature, health: 30, attackStat: 3, defenseStat: 7 };
+//   } else {
+//     return "You must choose mouse, shrew, or mole.";
+//   }
 // };
 
-// const storeState = () => {
-//   let currentState = {};
-//   return (stateChangeFunction = state => state) => {
-//     const newState = stateChangeFunction(currentState);
-//     currentState = {...newState};
-//     return newState;
-//   };
-// };
-
-// const stateControl = storeState();
 
 // const eat = changeState("health");
 // const beDamaged = changeState("health");
@@ -66,9 +54,33 @@ import './css/styles.css';
 // const newArmor = changeState("defenseStat");
 
 // const okCheese = changeState("health")(3);
-// const goodCheese = changeState("health")(5);
+const goodCheese = changeState("health")(5);
 // const bestCheese = changeState("health")(10);
 
-// const basicDamage = changeState("health")(-6);
+const basicDamage = changeState("health")(-6);
 // const mediumDamage = changeState("health")(-9);
 // const heavyDamage = changeState("health")(-12);
+
+const setupMouse = changeState("health")(25);
+
+
+
+window.onload = function() {
+
+  document.getElementById("start").onclick = function () {
+    const newState = stateControl(setupMouse);
+    document.getElementById("health-points").innerText = `HP: ${newState.health}`; 
+  };
+  document.getElementById("eat-cheese").onclick = function() {
+    const newState = stateControl(goodCheese);
+    document.getElementById("health-points").innerText = `HP: ${newState.health}`;
+  };
+  document.getElementById("scrounge").onclick = function() {
+    const newState = stateControl(basicDamage);
+    document.getElementById("health-points").innerText = `HP: ${newState.health}`;
+  };
+  document.getElementById("show-state").onclick = function() {
+    const currentState = stateControl();
+    document.getElementById("health-points").innerText = `HP: ${currentState.health}`;
+  };
+};

@@ -64,19 +64,20 @@ const setupMouse = changeState("health")(25);
 window.onload = function() {
 
   document.getElementById("start").onclick = function () {
+    console.log("hummus");
     const newState = stateControl(setupMouse);
-    document.getElementById('health-points').innerText = `HP: ${newState.health}`; 
+    document.getElementById("health-points").innerText = `HP: ${newState.health}`; 
   };
   document.getElementById("eat-cheese").onclick = function() {
     const newState = stateControl(goodCheese);
-    document.getElementById('health-points').innerText = `HP: ${newState.health}`;
+    document.getElementById("health-points").innerText = `HP: ${newState.health}`;
   };
   document.getElementById("scrounge").onclick = function() {
     const newState = stateControl(basicDamage);
-    document.getElementById('health-points').innerText = `HP: ${newState.health}`;
+    document.getElementById("health-points").innerText = `HP: ${newState.health}`;
   };
-  document.getElementById('show-state').onclick = function() {
+  document.getElementById("show-state").onclick = function() {
     const currentState = stateControl();
-    document.getElementById('health-points').innerText = `HP: ${currentState.health}`;
+    document.getElementById("health-points").innerText = `HP: ${currentState.health}`;
   };
 };
