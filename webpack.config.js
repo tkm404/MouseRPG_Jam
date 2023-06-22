@@ -19,7 +19,7 @@ module.exports = {
       verbose: true
     }),
     new HtmlWebpackPlugin({
-      title: 'Shape Tracker',
+      title: 'Mouse RPG Jam',
       template: './src/index.html',
       inject: 'body'
     })
