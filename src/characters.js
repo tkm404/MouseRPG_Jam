@@ -9,6 +9,7 @@ const storeState = () => {
 
 const stateControl = storeState();
 
+
 // const initialState = creatureState;
 
 const changeState = (prop) => {
@@ -64,7 +65,6 @@ const setupMouse = changeState("health")(25);
 window.onload = function() {
 
   document.getElementById("start").onclick = function () {
-    console.log("hummus");
     const newState = stateControl(setupMouse);
     document.getElementById("health-points").innerText = `HP: ${newState.health}`; 
   };

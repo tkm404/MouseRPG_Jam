@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-  <script type="text/javascript" src="characters.js"></script>
+  <script type="text/javascript" src="index.js"></script>
   <title>Mouse Survivor</title>
 </head>
 <body>
-  <button id="start">Start</button>
-  <br>
-  <button id="eat-cheese">Eat Cheese to Recover!</button>
-  <br>
-  <button id="scrounge">Scrounge to Survive!</button>
-  <br>
-  <button id="show-state">Current Health</button>
-  <h3>Mouse Health:</h3>
-  <h5><div id="health-points">HP: 0</div></h5>
+  <h2>Mouse Survivor!</h2>
+  <hr />
+  <p><button id="eat-cheese">Eat Cheese to Recover!</button></p>
+  <p><button id="eat-big">Eat a BIG cheese!</button></p>
+  <p><button id="fight">Fight to Survive!</button></p>
+  <p><button id="show-state">Current Health</button></p>
+  <p><button id="buy-cheese">Buy some Cheese!</button> (2 for 5xp)</p>
+  <p><button id="buy-big">Buy BIG Cheese</button> (1 for 8xp)</p>
+
+  <hr />
+  <h3>Mouse Stats:</h3>
+  <h5><div id="health-points">HP: 0</div>
+      <div id="experience">Exp: 0</div>
+      <div id="small-cheese">Cheese Bites: 0</div>
+      <div id="big-cheese">BIG Cheese Bites: 0</div></h5>
+
+  <hr />
+  <h3>Foe's Health:</h3>
+  <h5><div id="enemy-hp">HP: 0</div></h5>
+
+
 </body>
 </html>

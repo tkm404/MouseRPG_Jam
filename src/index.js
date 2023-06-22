@@ -2,8 +2,8 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
 
-const storeState = () => {
-  let currentState = {};
+const storeState = (initialValue) => {
+  let currentState = initialValue;
   return (stateChangeFunction = state => state) => {
     const newState = stateChangeFunction(currentState);
     currentState = {...newState};
@@ -11,7 +11,14 @@ const storeState = () => {
   };
 };
 
+
+
+
 const stateControl = storeState();
+
+
+
+
 
 // const initialState = creatureState;
 
@@ -25,8 +32,31 @@ const changeState = (prop) => {
 };
 
 
+let mouse = { health: 25, exp: 0, cheeseBites: 2, bigCheese: 0};
+let enemy = { health: 45};
+const initialMouse = storeState(mouse);
+const initialEnemy = storeState(enemy);
 
-// let mouse = { health: 25, attackStat: 5, defenseStat: 5 };
+const goodCheese = changeState("health")(5);
+const bestCheese = changeState("health")(10);
+const ateTheCheese = changeState("cheeseBites")(-1);
+const ateBestCheese = changeState("bigCheese")(-1);
+const getGoodCheese = changeState("cheeseBites")(2);
+const getBestCheese = changeState("bigCheese")(1);
+
+const basicDamage = changeState("health")(-6);
+const basicAttack = changeState("health")(-5);
+
+const getSomeXP = changeState("exp")(4);
+// const getMoreXP = changeState("XP")(8);
+const spendXPForCheese = changeState("exp")(-5);
+const spendXPForBigCheese = changeState("exp")(-8);
+
+// const spendXPForWeapon 
+
+
+
+
 // let shrew = { health: 20, attackStat: 7, defenseStat: 3 };
 // let mole = { health: 30, attackStat: 3, defenseStat: 7 };
 
@@ -54,31 +84,75 @@ const changeState = (prop) => {
 // const newArmor = changeState("defenseStat");
 
 // const okCheese = changeState("health")(3);
-const goodCheese = changeState("health")(5);
-// const bestCheese = changeState("health")(10);
 
-const basicDamage = changeState("health")(-6);
+
+
 // const mediumDamage = changeState("health")(-9);
 // const heavyDamage = changeState("health")(-12);
 
-const setupMouse = changeState("health")(25);
 
 
 
+
+
+//--------------------------------------------------------------------------------------
 window.onload = function() {
 
-  document.getElementById("start").onclick = function () {
-    const newState = stateControl(setupMouse);
-    document.getElementById("health-points").innerText = `HP: ${newState.health}`; 
-  };
+  const newState = initialMouse();
+  const newStateEnemy = initialEnemy();
+
+  document.getElementById("health-points").innerText = `HP: ${newState.health}`;
+  document.getElementById("experience").innerText = `Exp: ${newState.exp}`;
+  document.getElementById("small-cheese").innerText = `Cheese Bites: ${newState.cheeseBites}`;
+  document.getElementById("big-cheese").innerText = `BIG Cheese Bites: ${newState.bigCheese}`;
+
+  document.getElementById("enemy-hp").innerText = `Foe's HP: ${newStateEnemy.health}`;
+
+  // setup ^^^^
+
+  // mechanics vvvv
+
+  // healing
   document.getElementById("eat-cheese").onclick = function() {
-    const newState = stateControl(goodCheese);
-    document.getElementById("health-points").innerText = `HP: ${newState.health}`;
+    const healMouse = initialMouse(goodCheese);
+    const eatCheeseBite = initialMouse(ateTheCheese);
+    document.getElementById("health-points").innerText = `HP: ${healMouse.health}`;
+    document.getElementById("small-cheese").innerText = `Cheese Bites: ${eatCheeseBite.cheeseBites}`;
   };
-  document.getElementById("scrounge").onclick = function() {
-    const newState = stateControl(basicDamage);
-    document.getElementById("health-points").innerText = `HP: ${newState.health}`;
+  document.getElementById("eat-big").onclick = function() {
+    const healMouseGood = initialMouse(bestCheese);
+    const eatBigCheese = initialMouse(ateBestCheese);
+    document.getElementById("health-points").innerText = `HP: ${healMouseGood.health}`;
+    document.getElementById("big-cheese").innerText = `BIG Cheese Bites: ${eatBigCheese.bigCheese}`;
   };
+
+
+  // fighting/xp gain
+  document.getElementById("fight").onclick = function() {
+    const damageMouse = initialMouse(basicDamage);
+    const getSmallExp = initialMouse(getSomeXP);
+    const damageEnemy = initialEnemy(basicAttack);
+    document.getElementById("health-points").innerText = `HP: ${damageMouse.health}`;
+    document.getElementById("experience").innerText = `Exp: ${getSmallExp.exp}`;
+    document.getElementById("enemy-hp").innerText = `Foe's HP: ${damageEnemy.health}`;
+  };
+
+  // buy small cheese
+  document.getElementById("buy-cheese").onclick = function() {
+    const getSmallCheese = initialMouse(getGoodCheese);
+    const boughtSmallCheese = initialMouse(spendXPForCheese);
+    document.getElementById("small-cheese").innerText = `Cheese Bites: ${getSmallCheese.cheeseBites}`;
+    document.getElementById("experience").innerText = `Exp: ${boughtSmallCheese.exp}`;
+  };
+
+  // buy big cheese
+  document.getElementById("buy-big").onclick = function() {
+    const getBigCheese = initialMouse(getBestCheese);
+    const boughtBigCheese = initialMouse(spendXPForBigCheese);
+    document.getElementById("big-cheese").innerText = `BIG Cheese Bites: ${getBigCheese.bigCheese}`;
+    document.getElementById("experience").innerText = `Exp: ${boughtBigCheese.exp}`;
+  };
+
   document.getElementById("show-state").onclick = function() {
     const currentState = stateControl();
     document.getElementById("health-points").innerText = `HP: ${currentState.health}`;
