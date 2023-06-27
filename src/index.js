@@ -12,13 +12,7 @@ const storeState = (initialValue) => {
 };
 
 
-
-
 // const stateControl = storeState();
-
-
-
-
 
 // const initialState = creatureState;
 
