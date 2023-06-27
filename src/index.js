@@ -48,7 +48,7 @@ const basicDamage = changeState("mouseHealth")(-6);
 const basicAttack = changeState("enemyHealth")(-5);
 
 const getSomeXP = changeState("mouseExp")(4);
-// const getMoreXP = changeState("XP")(8);
+const getMoreXP = changeState("mouseExp")(8);
 const spendXPForCheese = changeState("mouseExp")(-5);
 const spendXPForBigCheese = changeState("mouseExp")(-8);
 
@@ -142,6 +142,7 @@ window.onload = function () {
   };
 
 };
+
 document.getElementById("eat-big").onclick = function () {
   const mouseHealthStatus = initialMouse();
   let mouseBigHealthDifference = 25 - mouseHealthStatus.mouseHealth;
@@ -157,7 +158,7 @@ document.getElementById("eat-big").onclick = function () {
   } else if (mouseHealthStatus.mouseHealth >= 25) {
 
     document.getElementById("info-display").innerText = "You're already at full health! Save your cheese!";
-    
+
   } else {
 
     const healMouseGood = initialMouse(bestCheese);
@@ -175,10 +176,22 @@ document.getElementById("fight").onclick = function () {
   const damageMouse = initialMouse(basicDamage);
   const getSmallExp = initialMouse(getSomeXP);
   const damageEnemy = initialEnemy(basicAttack);
-  document.getElementById("info-display").innerText = "You fight! You dealt 5 damage and received 6 damage in turn. You earned 4XP!";
-  document.getElementById("health-points").innerText = `HP: ${damageMouse.mouseHealth}`;
-  document.getElementById("experience").innerText = `Exp: ${getSmallExp.mouseExp}`;
-  document.getElementById("enemy-hp").innerText = `Foe's HP: ${damageEnemy.enemyHealth}`;
+
+  if (damageMouse.mouseHealth <= 0 ) {
+    document.getElementById("info-display").innerText = "Game Over!";
+    document.getElementById("health-points").innerText = `HP: ${damageMouse.mouseHealth}`;
+  } else if (damageEnemy.enemyHealth <= 0) {
+    const winExp = initialMouse(getMoreXP);
+    document.getElementById("info-display").innerText = "You win! You gained 8XP! Prepare for the next fight!";
+    document.getElementById("experience").innerText = `Exp: ${winExp.mouseExp}`;
+    document.getElementById("enemy-hp").innerText = `Foe's HP: ${damageEnemy.enemyHealth}`;
+  } else {
+    document.getElementById("info-display").innerText = "You fight! You dealt 5 damage and received 6 damage in turn. You earned 4XP!";
+    document.getElementById("health-points").innerText = `HP: ${damageMouse.mouseHealth}`;
+    document.getElementById("experience").innerText = `Exp: ${getSmallExp.mouseExp}`;
+    document.getElementById("enemy-hp").innerText = `Foe's HP: ${damageEnemy.enemyHealth}`;    
+  }
+
 };
 
 // buy small cheese
