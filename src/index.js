@@ -14,7 +14,7 @@ const storeState = (initialValue) => {
 
 
 
-const stateControl = storeState();
+// const stateControl = storeState();
 
 
 
@@ -32,25 +32,25 @@ const changeState = (prop) => {
 };
 
 
-let mouse = { health: 25, exp: 0, cheeseBites: 2, bigCheese: 0};
-let enemy = { health: 45};
+let mouse = { mouseHealth: 25, mouseExp: 0, mouseCheeseBites: 2, mouseBigCheese: 0};
+let enemy = { enemyHealth: 45};
 const initialMouse = storeState(mouse);
 const initialEnemy = storeState(enemy);
 
-const goodCheese = changeState("health")(5);
-const bestCheese = changeState("health")(10);
-const ateTheCheese = changeState("cheeseBites")(-1);
-const ateBestCheese = changeState("bigCheese")(-1);
-const getGoodCheese = changeState("cheeseBites")(2);
-const getBestCheese = changeState("bigCheese")(1);
+const goodCheese = changeState("mouseHealth")(5);
+const bestCheese = changeState("mouseHealth")(10);
+const ateTheCheese = changeState("mouseCheeseBites")(-1);
+const ateBestCheese = changeState("mouseBigCheese")(-1);
+const getGoodCheese = changeState("mouseCheeseBites")(2);
+const getBestCheese = changeState("mouseBigCheese")(1);
 
-const basicDamage = changeState("health")(-6);
-const basicAttack = changeState("health")(-5);
+const basicDamage = changeState("mouseHealth")(-6);
+const basicAttack = changeState("enemyHealth")(-5);
 
-const getSomeXP = changeState("exp")(4);
+const getSomeXP = changeState("mouseExp")(4);
 // const getMoreXP = changeState("XP")(8);
-const spendXPForCheese = changeState("exp")(-5);
-const spendXPForBigCheese = changeState("exp")(-8);
+const spendXPForCheese = changeState("mouseExp")(-5);
+const spendXPForBigCheese = changeState("mouseExp")(-8);
 
 // const spendXPForWeapon 
 
@@ -101,12 +101,12 @@ window.onload = function() {
   const newState = initialMouse();
   const newStateEnemy = initialEnemy();
 
-  document.getElementById("health-points").innerText = `HP: ${newState.health}`;
-  document.getElementById("experience").innerText = `Exp: ${newState.exp}`;
-  document.getElementById("small-cheese").innerText = `Cheese Bites: ${newState.cheeseBites}`;
-  document.getElementById("big-cheese").innerText = `BIG Cheese Bites: ${newState.bigCheese}`;
+  document.getElementById("health-points").innerText = `HP: ${newState.mouseHealth}`;
+  document.getElementById("experience").innerText = `Exp: ${newState.mouseExp}`;
+  document.getElementById("small-cheese").innerText = `Cheese Bites: ${newState.mouseCheeseBites}`;
+  document.getElementById("big-cheese").innerText = `BIG Cheese Bites: ${newState.mouseBigCheese}`;
 
-  document.getElementById("enemy-hp").innerText = `Foe's HP: ${newStateEnemy.health}`;
+  document.getElementById("enemy-hp").innerText = `Foe's HP: ${newStateEnemy.enemyHealth}`;
 
   // setup ^^^^
 
@@ -118,15 +118,15 @@ window.onload = function() {
     const healMouse = initialMouse(goodCheese);
     const eatCheeseBite = initialMouse(ateTheCheese);
     document.getElementById("info-display").innerText = "You ate some decent cheese and regained 5 HP!";
-    document.getElementById("health-points").innerText = `HP: ${healMouse.health}`;
-    document.getElementById("small-cheese").innerText = `Cheese Bites: ${eatCheeseBite.cheeseBites}`;
+    document.getElementById("health-points").innerText = `HP: ${healMouse.mouseHealth}`;
+    document.getElementById("small-cheese").innerText = `Cheese Bites: ${eatCheeseBite.mouseCheeseBites}`;
   };
   document.getElementById("eat-big").onclick = function() {
     const healMouseGood = initialMouse(bestCheese);
     const eatBigCheese = initialMouse(ateBestCheese);
     document.getElementById("info-display").innerText = "You ate some GREAT cheese and regained 10HP!";
-    document.getElementById("health-points").innerText = `HP: ${healMouseGood.health}`;
-    document.getElementById("big-cheese").innerText = `BIG Cheese Bites: ${eatBigCheese.bigCheese}`;
+    document.getElementById("health-points").innerText = `HP: ${healMouseGood.mouseHealth}`;
+    document.getElementById("big-cheese").innerText = `BIG Cheese Bites: ${eatBigCheese.mouseBigCheese}`;
   };
 
 
@@ -136,9 +136,9 @@ window.onload = function() {
     const getSmallExp = initialMouse(getSomeXP);
     const damageEnemy = initialEnemy(basicAttack);
     document.getElementById("info-display").innerText = "You fight! You dealt 5 damage and received 6 damage in turn. You earned 4XP!";
-    document.getElementById("health-points").innerText = `HP: ${damageMouse.health}`;
-    document.getElementById("experience").innerText = `Exp: ${getSmallExp.exp}`;
-    document.getElementById("enemy-hp").innerText = `Foe's HP: ${damageEnemy.health}`;
+    document.getElementById("health-points").innerText = `HP: ${damageMouse.mouseHealth}`;
+    document.getElementById("experience").innerText = `Exp: ${getSmallExp.mouseExp}`;
+    document.getElementById("enemy-hp").innerText = `Foe's HP: ${damageEnemy.enemyHealth}`;
   };
 
   // buy small cheese
@@ -146,8 +146,8 @@ window.onload = function() {
     const getSmallCheese = initialMouse(getGoodCheese);
     const boughtSmallCheese = initialMouse(spendXPForCheese);
     document.getElementById("info-display").innerText = "You bought 2 bites of decent cheese for 5XP!";
-    document.getElementById("small-cheese").innerText = `Cheese Bites: ${getSmallCheese.cheeseBites}`;
-    document.getElementById("experience").innerText = `Exp: ${boughtSmallCheese.exp}`;
+    document.getElementById("small-cheese").innerText = `Cheese Bites: ${getSmallCheese.mouseCheeseBites}`;
+    document.getElementById("experience").innerText = `Exp: ${boughtSmallCheese.mouseExp}`;
   };
 
   // buy big cheese
@@ -155,14 +155,14 @@ window.onload = function() {
     const getBigCheese = initialMouse(getBestCheese);
     const boughtBigCheese = initialMouse(spendXPForBigCheese);
     document.getElementById("info-display").innerText = "You bought a bite of GREAT cheese for 8XP!";
-    document.getElementById("big-cheese").innerText = `BIG Cheese Bites: ${getBigCheese.bigCheese}`;
-    document.getElementById("experience").innerText = `Exp: ${boughtBigCheese.exp}`;
+    document.getElementById("big-cheese").innerText = `BIG Cheese Bites: ${getBigCheese.mouseBigCheese}`;
+    document.getElementById("experience").innerText = `Exp: ${boughtBigCheese.mouseExp}`;
   };
 
   document.getElementById("show-state").onclick = function() {
-    const currentState = stateControl(initialMouse);
-    console.log(stateControl());
-    document.getElementById("info-display").innerText = `You presently have ${currentState.health} HP and ${currentState.exp} XP. You have ${currentState.cheeseBites} cheese bites and ${currentState.bigCheese} GREAT cheese bites available to eat!`;
+    const presentState = initialMouse();
+    console.log(initialMouse());
+    document.getElementById("info-display").innerText = `You presently have ${presentState.mouseHealth} HP and ${presentState.mouseExp} XP. You have ${presentState.mouseCheeseBites} cheese bites and ${presentState.mouseBigCheese} GREAT cheese bites available to eat!`;
     // document.getElementById("health-points").innerText = `HP: ${currentState.health}`;
   };
 };
